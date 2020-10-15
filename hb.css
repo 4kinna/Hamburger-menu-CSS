@@ -1,0 +1,233 @@
+/* --- GRUDSETTINGS--- */
+
+*::before,
+*::after {
+  box-sizing: border-box; /* boxsizing, hjälper till att kalkulera och placera boxarna */
+  position: relative;
+  cursor: default; /*sätter muspekaren till en standard pil*/
+  margin: 0;
+}
+
+html {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  /* font-size: 62.5%; lite osäker på varför detta används */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vw;
+  font-variant-ligatures: no-common-ligatures; /*tillåter inteihopskrivning av tex fi, då i priken försvinner in i f*/
+  font-feature-settings: "kern", "liga" 0, "clig" 0; /*tar kontroll över typografiska inställningar*/
+  scroll-behavior: smooth; /*scrollar mellan delarna på sidan fint, auto hoppar direkt dittman vill*/
+  overflow-x: hidden; /* de som inte får plats horisontellt försvinner bakom tex scrollbar osv*/
+}
+/* --------------------------------------- */
+header {
+  background-image: url("https://cdn.pixabay.com/photo/2016/10/27/10/25/bokeh-1773914_960_720.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: fixed;
+
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+}
+header h1 {
+  font-size: 25px;
+  text-align: center;
+  padding: 60px 5px 5px 5px;
+}
+
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw; /*viewport kalkulerar storlek från bowserns skärmstolek */
+  height: 100vw;
+  z-index: 100; /*sätter stackordningen, -1 lägst- 100 högst(syns över -1), funkar på position:absolute,relative, fixed, sticky*/
+  pointer-events: none; /* sätts för att menun inte ska bli ett "target" det vill säga vår pil blir en hand*/
+  margin: 0;
+  padding: 0;
+}
+.menu-backdrop {
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%; /* % kalkulerar storlek från sin förälders stolek, i detta fall .menu */
+  height: 100%;
+  /* background-color: blue; */
+  opacity: 0; /*vi definerar allt bakgrunden ska ha när den är fullt synlig därför sätter vi 0 här*/
+  /* transition: opacity 0ms ease-out; */
+  pointer-events: none;
+}
+.menu-burger {
+  /*vår hamburgemeny är osyndlig, detta plaserar den 11px från topen och vänster hörnet*/
+  z-index: 2;
+  position: absolute;
+  width: 4rem;
+  height: 4rem;
+  top: 1.1rem;
+  left: 1.1rem;
+  padding: 0.6rem 0.4rem;
+}
+/*specifiserar vårt span och använde pusedocode innan/efter*/
+.menu-burger span,
+.menu-burger span::before,
+.menu-burger span::after {
+  content: "";
+  display: block;
+  width: 3.2rem;
+  height: 0.4rem;
+  position: absolute;
+  margin-top: 1.2rem;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 0.3rem;
+}
+
+.menu-burger span::before {
+  margin-top: -0.8rem;
+}
+.menu-burger span::after {
+  margin-top: 0.8rem;
+}
+/*vår checkbox, sätt samma size och position som hamburgaren och gör osynlig*/
+.menu-toggle {
+  z-index: 3;
+  position: absolute;
+  width: 4rem;
+  height: 4rem;
+  top: 1.1rem;
+  left: 1.1rem;
+  cursor: pointer;
+  opacity: 0;
+  outline: 1px solid black;
+  pointer-events: all;
+}
+.menu-content {
+  z-index: 4;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: auto;
+  width: 15rem;
+  height: 100vh;
+  margin: 0;
+  padding: 0 0 2rem 0.5rem;
+  background: rgb(253, 37, 224);
+  transform: 0 0; /*?*/
+  transform: translateX(
+    -16.5rem
+  ); /*här flyttar vi ut menyn horosontelt till vänster 165px, menyn är 150px+10px shado + 5px för säkerhetskull*/
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1); /*?*/
+  pointer-events: all;
+  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.75);
+}
+.menu-content h2 {
+  text-decoration: underline;
+}
+.menu-content ul {
+  list-style: none;
+  padding: 0;
+}
+.menu-content a {
+  text-decoration: none;
+  font-weight: bold;
+  color: black;
+}
+.menu-content a:hover {
+  color: antiquewhite;
+}
+.menu-content a:visited {
+  color: white;
+}
+.menu-toggle:checked {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+.menu-toggle:checked ~ .menu-content {
+  /*när checkboxen är klickad på sätts menu-content transform till "none" = sätter transformX till 0 så att menyn kommer in i bilden igen*/
+  transform: none;
+}
+
+/* .menu-toggle:checked ~ .menu-backdrop {
+  opacity: 1;
+} */
+
+main {
+  max-width: 100rem;
+  /* margin: 2rem 6rem; */
+  padding: 8rem 2rem 2rem 2rem;
+}
+#container {
+  display: block;
+}
+
+#container h3 {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-decoration: underline;
+  text-align: center;
+}
+#container article {
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+/* Footer + children */
+.footer {
+  background-image: url("https://cdn.pixabay.com/photo/2016/10/27/10/25/bokeh-1773914_960_720.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: table;
+  width: 100%;
+}
+.footer p {
+  color: rgb(41, 40, 40);
+  text-align: center;
+}
+.footer ul {
+  text-align: center;
+  padding: 0;
+  margin: 5px 0 0 0;
+}
+.footer li {
+  list-style: none;
+  display: inline;
+  position: relative;
+}
+
+.footer img {
+  padding-top: 10px;
+  margin: 10px;
+}
+
+@media screen and (min-width: 600px) {
+  #container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto-fill;
+    overflow: hidden;
+  }
+  .item1 {
+    grid-row: 1;
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+  .item2 {
+    overflow: hidden;
+  }
+  .item3 {
+    overflow: hidden;
+  }
+}
